@@ -11,7 +11,7 @@ pipeline {
             steps {
                 withSonarQubeEnv(installationName: 'SONAR_9.6', envOnly: true, credentialsId: 'SONAR_TOKEN') {
                     sh "/usr/local/apache-maven-3.8.7/bin/mvn clean package sonar:sonar"
-                    echo "${env.SONAR_HOST_URL}"
+                    /* echo "${env.SONAR_HOST_URL}" */
             
                 }
             }
