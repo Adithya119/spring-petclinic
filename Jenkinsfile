@@ -1,7 +1,11 @@
 /* spc + sonarQube */
 
 pipeline {
-    agent { label 'node-1' } 
+    agent { label 'node-1' }
+
+    tools {
+        maven 'MVN_3.8.7'    /* by giving tools, you don't need to mention the full path of maven in the below "build" stage */
+    } 
 
     stages {
         stage('git') {
@@ -10,10 +14,14 @@ pipeline {
             }
         }
         stage('build') {
-            steps {   /* installationName refers to name of sonar server configured in Jenkins UI (Manage Jenkins > Configure System); credentialsId is the Id of the User Token using which Jenkins connects with sonar server */
-                withSonarQubeEnv(installationName: 'SONAR_9.6', envOnly: true, credentialsId: 'SONAR_TOKEN') { /* refer 'pipeline steps ref' doc */
-                    sh "/usr/local/apache-maven-3.8.7/bin/mvn clean package sonar:sonar"
-                    echo "${env.SONAR_HOST_URL}"
+            steps {      /* installationName refers to name of sonar server configured in Jenkins UI (Manage Jenkins > Configure System); credentialsId is the Id of the User Token using which Jenkins connects with sonar server */
+                withSonarQubeEnv(installationName: 'SONAR_9.6', envOnly: true, credentialsId: 'SONAR_TOKEN') {    /* refer 'pipeline steps ref' doc */
+                    sh "mvn clean package sonar:sonar"
+                    timeout(time: 1, unit: 'HOURS') {     /* timeout the project if quality gate doesn't reply within 1 HOUR */
+                        waitForQualityGate abortPipeline: true, credentialsId: 'SONAR_TOKEN'
+                        /* "waitForQualityGate" by giving this, you are telling jenkins to wait for quality gate's input */
+                        /* "abortPipeline: true" set pipeline to UNSTABLE if quality gate fails*/
+                    }
             
                 }
             }
