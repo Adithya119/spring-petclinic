@@ -4,7 +4,7 @@ pipeline {
     agent { label 'node-1' }
 
     tools {    /* by giving tools, you don't need to mention the full path of maven in the below "build" stage */
-        maven 'MVN_3.8.7'    
+        maven 'maven 3.8.7'    
     } 
 
     stages {
