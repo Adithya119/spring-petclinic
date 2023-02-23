@@ -1,5 +1,7 @@
 // This code is just to build the code & push artifacts to Artifactory (jfrog)
 
+// for explanation of all fields, refer your notes
+
 pipeline {
     agent { label 'node-1' } 
 
@@ -26,7 +28,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'ARTIFACTORY_PASSWORD', usernameVariable: 'ARTIFACTORY_USERNAME', passwordVariable: 'ARTIFACTORY_PASSWORD')]) {
                     rtMavenRun (
-                        tool: 'maven 3.8.7', // Tool name from Jenkins configuration // copied from "tools" stage
+                        tool: 'maven 3.8.7', // Maven installation name from Global tools configuration // copied from "tools" stage
                         pom: 'pom.xml',
                         goals: 'clean install',
                         deployerId: "MAVEN_DEPLOYER",
