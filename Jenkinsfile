@@ -9,6 +9,8 @@ pipeline {
                 git branch: 'jfrog', url: 'https://github.com/Adithya119/spring-petclinic.git'
             }
         }
+
+        
         
         stage ('Artifactory configuration') {  /* this is to push artifacts to Artifactory */
             steps {
