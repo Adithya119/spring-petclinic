@@ -3,14 +3,16 @@
 pipeline {
     agent { label 'node-1' } 
 
+    tools {    /* by giving tools, you don't need to mention the full path of maven in the below "build" stage */
+        maven 'MVN_3.8.7'    
+    }
+
     stages {
         stage('git') {
             steps { 
                 git branch: 'jfrog', url: 'https://github.com/Adithya119/spring-petclinic.git'
             }
-        }
-
-        
+        }        
         
         stage ('Artifactory configuration') {  /* this is to push artifacts to Artifactory */
             steps {
