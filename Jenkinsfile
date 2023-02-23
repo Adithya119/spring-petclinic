@@ -24,7 +24,7 @@ pipeline {
     
         stage ('Exec Maven') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'ARTIFACTORY_PASSWORD')]) {
+                withCredentials([usernamePassword(credentialsId: 'ARTIFACTORY_PASSWORD', usernameVariable: 'ARTIFACTORY_USERNAME', passwordVariable: 'ARTIFACTORY_PASSWORD')]) {
                     rtMavenRun (
                         tool: 'MVN_3.8.7', // Tool name from Jenkins configuration // copied from "tools" stage
                         pom: 'pom.xml',
