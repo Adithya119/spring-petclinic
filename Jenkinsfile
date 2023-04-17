@@ -25,6 +25,7 @@ pipeline {
                     serverId: 'ARTIFACTORY_SERVER',       // referencing the instance_Id in Configure System of Jenkins. 
                     releaseRepo: 'ccp-release',
                     snapshotRepo: 'ccp-snapshot'
+                    deployArtifacts: true
                 )
             }
         }
