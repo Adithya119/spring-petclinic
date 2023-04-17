@@ -17,11 +17,14 @@ pipeline {
             steps {
                 withSonarQubeEnv(installationName: 'SONAR_9.6.1', envOnly: true, credentialsId: 'SONAR_TOKEN_9.6.1') {
                     sh 'mvn clean package sonar:sonar'                       
-                    timeout(time: 1, unit: 'HOURS') {
-                        waitForQualityGate abortPipeline: true
                     }
                 }
             }
+
+        stage('QualityGate') {
+            timeout(time: 1, unit: 'HOURS') {
+                waitForQualityGate abortPipeline: true
+        } 
         }
     }
 }
