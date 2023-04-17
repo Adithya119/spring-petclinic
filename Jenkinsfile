@@ -16,7 +16,7 @@ pipeline {
         stage('build') {
             steps {
                 withSonarQubeEnv(installationName: 'SONAR_9.6.1', envOnly: true, credentialsId: 'SONAR_TOKEN_9.6.1') {
-                    sh 'mvn clean package sonar:sonar'
+                    sh 'mvn clean package sonar:sonar'                       /* sonar:sonar is not username:password --> it's a mystery. */
                 }
             }
         }
