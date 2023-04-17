@@ -15,7 +15,7 @@ pipeline {
 
         stage('build') {
             steps {
-                withSonarQubeEnv(installationName: 'SONAR_9.6.1', envOnly: true, credentialsId: 'SONAR_TOKEN_9.6.1') {
+                withSonarQubeEnv(installationName: 'SONAR_9.6.1') {
                     sh 'mvn clean package sonar:sonar'                       
                     }
                 }
@@ -43,4 +43,5 @@ timeout the project if quality gate doesn't reply within 1 HOUR.
 "waitForQualityGate" by giving this, you are telling jenkins to wait for quality gate's input.
 "abortPipeline: true" set pipeline to UNSTABLE if quality gate fails 
 
+, envOnly: true, credentialsId: 'SONAR_TOKEN_9.6.1'
 */
