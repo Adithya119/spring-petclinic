@@ -40,6 +40,21 @@ pipeline {
                 }
             }
         }
+
+        stage('publish build info') {
+            steps {
+                rtPublishBuildInfo (
+                    serverId: 'ARTIFACTORY_SERVER'
+                )
+            }
+        }
     }
 }
 
+
+/*
+
+Notes:--
+
+usernameVariable: 'ARTIFACTORY_USERNAME', passwordVariable: 'ARTIFACTORY_PASSWORD' ----> just give these for anything, as it is - 
+doesn't matter what the credentialsId is. They are a mystery
