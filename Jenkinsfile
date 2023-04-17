@@ -31,7 +31,7 @@ pipeline {
 
         stage('Exec maven / build') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'ARTIFACTORY_CREDS')]) {        // creds needed to push build artifacts
+                withCredentials([usernamePassword(credentialsId: 'ARTIFACTORY_CREDS', usernameVariable: 'ARTIFACTORY_USERNAME', passwordVariable: 'ARTIFACTORY_PASSWORD')]) {        // creds needed to push build artifacts
                     rtMavenRun (                              // run Artifactory maven / run the goals & push to artifactory server
                         pom: 'pom.xml',                       // path of pom.xml file
                         goals: 'clean package',
