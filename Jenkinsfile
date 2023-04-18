@@ -23,7 +23,7 @@ pipeline {
                 rtMavenDeployer (                         // setting maven deployer / setting artifactory server
                     id: "Artifactory-1",                  // unique identifier for this server
                     serverId: 'ARTIFACTORY_SERVER',       // referencing the instance_Id in Configure System of Jenkins. 
-                    releaseRepo: 'ccp-release',
+                    releaseRepo: 'ccp-remote-1',
                     snapshotRepo: 'ccp-snapshot',
                     deployArtifacts: true           // refer notes 
                 )
