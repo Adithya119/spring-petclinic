@@ -1,0 +1,69 @@
+no luck in downloading artifacts till now.
+but it's possible using many ways, few of which are:-
+
+** prefer ansible as it can download on multiple hosts at once   **
+
+1) using ansible playbook:-
+    # Download an artifact from a private repository requiring authentication
+
+    - name: pull spc jar file from repo
+      hosts: all
+      become: yes
+      tasks:
+      - maven_artifact:
+          group_id: com.company
+          artifact_id: library-name
+          repository_url: 'https://repo.company.com/maven'
+          username: user
+          password: pass
+          dest: /tmp/library-name-latest.jar
+
+2) using rtDownload:-
+
+    stage('download artifact') {
+            steps {
+                rtDownload (
+                    serverId: 'ARTIFACTORY_SERVER',    // referencing the instance_Id in Configure System of Jenkins. 
+                    buildName : String (optional)
+                    buildNumber : String (optional)
+                    failNoOp : boolean (optional)
+                    module : String (optional)
+                    project : String (optional)
+                    spec : String (optional)
+                    specPath : String (optional)
+                )
+            }
+        }
+
+  Note:- ALso check https://www.jenkins.io/doc/pipeline/steps/artifactory/#artifactorydownload-download-artifacts
+
+
+3) using curl:-
+
+   (i) curl -sSf -u "<USERNAME>:<PASSWORD>" \
+       -O 'http(s)://<ARTIFACTORY_URL>/<REPO>/<PATH>/file.zip'     // refer https://www.shellhacks.com/jfrog-artifactory-download-artifact-using-curl/
+
+   (ii) versionToDownload=$(curl -u$user:$password 'https://$artifactory/artifactory/$project/' | grep -o 'service-[^"]*.tar.gz' | sort | tail -1)
+           // refer https://stackoverflow.com/questions/13989033/how-to-download-the-latest-artifact-from-artifactory-repository
+
+--
+
+To-do's:-
+
+All the above is just using Jenkins & deploying app on VM's, not pods. 
+Therefore, just use stash-unstash for the sake of it to get it done with & in interviews tell you use stash-unstash for deploying - 
+while building the jar & for using existing jar, tell that you pull it using Ansible.
+
+
+--
+
+
+For deploying spc on k8s pods:-   (you need to deploy on K8s master)
+1) 1st deployment:-
+    anyway you like (you need to write Docker file) - try to automate some way.
+2) upgrades to spc:-
+    new jar file is created, which is pushed to remote repo. k8s master needs to pull it from repo, modify the docker file or break - 
+    the automation at this point & invoke manual intervention.
+
+
+To deploy on multiple k8s clusters, stash-unstash over to Ansible master, which will further send it to its nodes (k8s master of multiple k8s) or use ansible download from repo 
