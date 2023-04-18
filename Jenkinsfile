@@ -25,7 +25,7 @@ pipeline {
                     serverId: 'ARTIFACTORY_SERVER',       // referencing the instance_Id in Configure System of Jenkins. 
                     releaseRepo: 'ccp-remote-1',
                     snapshotRepo: 'ccp-snapshot',
-                    deployArtifacts: true           // refer notes 
+                    deployArtifacts: true
                 )
             }
         }
@@ -59,9 +59,5 @@ Notes:--
 
 usernameVariable: 'ARTIFACTORY_USERNAME', passwordVariable: 'ARTIFACTORY_PASSWORD' ----> just give these for anything, as it is - 
 doesn't matter what the credentialsId is. They are a mystery
-
-
-deployArtifacts: true ---> by default, it is false. Give 'true' so that Jenkins pushes build artifacts to the configured artifactory -
-server
 
 */
