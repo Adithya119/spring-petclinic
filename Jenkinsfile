@@ -38,6 +38,8 @@ pipeline {
                         goals: 'clean package',
                         deployerId: 'Artifactory-1'           // mention this if you have more than 1 artifactory servers configured
                     )
+                    
+                    stash includes: '**/*.jar', name: 'spc-jar-test'   // stash
                 }
             }
         }
@@ -47,6 +49,15 @@ pipeline {
                 rtPublishBuildInfo (
                     serverId: 'ARTIFACTORY_SERVER'
                 )
+            }
+        }
+
+        stage('copy jar to k8s master node') {
+            agent {                              // different agent used inside a stage
+                label 'k8s_master'
+            }
+            steps {
+                unstash 'spc-jar-test'
             }
         }
     }

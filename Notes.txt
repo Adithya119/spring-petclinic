@@ -67,3 +67,25 @@ For deploying spc on k8s pods:-   (you need to deploy on K8s master)
 
 
 To deploy on multiple k8s clusters, stash-unstash over to Ansible master, which will further send it to its nodes (k8s master of multiple k8s) or use ansible download from repo 
+
+
+
+---
+
+vi spc-dockerfile --> edit docker file with new jar file
+
+docker image build -f spc-dockerfile -t adithya119/spc-test:v2 .   ---> name it with new verison v2
+
+docker image push adithya119/spc-test:v2  
+
+vi spc.yml --> replace old image with new image name
+
+kubectl apply -f spc.yml   --> will automatically do rolling update
+
+sleep 120s
+kubectl get pods -o yaml | grep image:
+
+
+kubectl get pods -o wide
+kubectl get svc
+kubectl get deployments.apps
