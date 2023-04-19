@@ -49,15 +49,6 @@ pipeline {
                 )
             }
         }
-
-        stage('download artifact') {
-            steps {
-                rtDownload (
-                    serverId: 'ARTIFACTORY_SERVER',
-                    buildName: 'My CI-CD project :: spc-build-and-push-artifacts'
-                )
-            }
-        }
     }
 }
 
