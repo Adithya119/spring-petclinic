@@ -14,7 +14,7 @@ pipeline {
     stages {
         stage('git') {
             steps {
-                git branch: 'artifactory', poll: false, url: 'https://github.com/Adithya119/spring-petclinic.git'
+                git branch: 'artifactory', url: 'https://github.com/Adithya119/spring-petclinic.git'
             }
         }
 
@@ -39,7 +39,7 @@ pipeline {
                         deployerId: 'Artifactory-1'           // mention this if you have more than 1 artifactory servers configured
                     )
                     
-                    stash includes: '**/*.jar', name: 'spc-jar-test'   // stash
+                    stash includes: '**/*.jar', name: 'spc-jar'   // stash
                 }
             }
         }
@@ -57,7 +57,7 @@ pipeline {
                 label 'k8s_master'
             }
             steps {
-                unstash 'spc-jar-test'
+                unstash 'spc-jar'
             }
         }
     }
