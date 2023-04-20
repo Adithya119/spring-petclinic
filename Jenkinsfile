@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('git') {
             steps {
-                git branch: 'declarative', poll: false, url: 'https://github.com/Adithya119/spring-petclinic.git'       /* poll: false --> remote repository will not be polled for changes. */
+                git branch: 'declarative', url: 'https://github.com/Adithya119/spring-petclinic.git'       /* poll: false --> remote repository will not be polled for changes. */
             }            
         }
 
