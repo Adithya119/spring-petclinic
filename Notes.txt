@@ -14,31 +14,37 @@ but it's possible using many ways, few of which are:-
           group_id: com.company
           artifact_id: library-name
           repository_url: 'https://repo.company.com/maven'
-          username: user
+          username: user                                         ## may be you can give withCredentials([usernamePassword(credentialsId: 'REPO-1_CREDS')]) { ansible-playbook -i hosts pull_artifacts.yml }
           password: pass
           dest: /tmp/library-name-latest.jar
 
-2) using rtDownload:-
+
+2) Download artifact directly into docker file using wget command & enclose creds with ENV or ARGS
+
+
+3) using rtDownload:-
 
     stage('download artifact') {
             steps {
-                rtDownload (
-                    serverId: 'ARTIFACTORY_SERVER',    // referencing the instance_Id in Configure System of Jenkins. 
-                    buildName : String (optional)
-                    buildNumber : String (optional)
-                    failNoOp : boolean (optional)
-                    module : String (optional)
-                    project : String (optional)
-                    spec : String (optional)
-                    specPath : String (optional)
-                )
+                withCredentials([usernamePassword(credentialsId: 'ARTIFACTORY_CREDS', usernameVariable: 'ARTIFACTORY_USERNAME', passwordVariable: 'ARTIFACTORY_PASSWORD')]) {
+                    rtDownload (
+                        serverId: 'ARTIFACTORY_SERVER',    // referencing the instance_Id in Configure System of Jenkins. 
+                        buildName : String (optional)
+                        buildNumber : String (optional)
+                        failNoOp : boolean (optional)
+                        module : String (optional)
+                        project : String (optional)
+                        spec : String (optional)
+                        specPath : String (optional)
+                    )
+                }
             }
         }
 
   Note:- ALso check https://www.jenkins.io/doc/pipeline/steps/artifactory/#artifactorydownload-download-artifacts
 
 
-3) using curl:-
+4) using curl:-
 
    (i) curl -sSf -u "<USERNAME>:<PASSWORD>" \
        -O 'http(s)://<ARTIFACTORY_URL>/<REPO>/<PATH>/file.zip'     // refer https://www.shellhacks.com/jfrog-artifactory-download-artifact-using-curl/
