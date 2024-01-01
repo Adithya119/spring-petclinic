@@ -56,9 +56,9 @@ but it's possible using many ways, few of which are:-
 
 To-do's:-
 
-All the above is just using Jenkins & deploying app on VM's, not pods. 
-Therefore, just use stash-unstash for the sake of it to get it done with & in interviews tell you use stash-unstash for deploying - 
-while building the jar & for using existing jar, tell that you pull it using Ansible.
+All the above is just using Jenkins & deploying app on VM's, not on pods. 
+Therefore, just use stash-unstash for the sake of it to get it done with.
+* use stash-unstash for deploying while building the jar & for using existing jar, you can pull it using Ansible.
 
 
 --
