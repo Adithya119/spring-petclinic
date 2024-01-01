@@ -47,10 +47,10 @@ timeout the project if quality gate doesn't reply within 1 HOUR.
 -----------------
 IMPORTANT:--
 
-1) Trainer has removed envOnly: true & credentialsId: 'SONAR_TOKEN_9.6.1' inside withSonarQubeEnv because these were giving error when 
+1) * removed envOnly: true & credentialsId: 'SONAR_TOKEN_9.6.1' inside withSonarQubeEnv because these were giving error when 
 mixed with quality gate. But SONAR_TOKEN has the token so that Jenkins server can connect to Sonar server.
 
-2) Trainer only gave installation name inside withSonarQubeEnv.
+2) * gave installation name inside withSonarQubeEnv.
 withSonarQubeEnv(installationName: 'SONAR_9.6.1') --> by running this, jenkins checks "SonarQube servers" in the configure system -
 and this has Sonar server Url & it's Token inside it. This is how jenkins reads & gets sonar's url & token to login to it
 
